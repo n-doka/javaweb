@@ -7,10 +7,10 @@ public class Form {
 	private long id;
 	@Size(min = 1, max = 10, message = "input 1 to 10")
 	private String title;
-	@Size(min = 1, max = 10, message = "input 1 to 100")
+	@Size(min = 1, max = 100, message = "input 1 to 100")
 	private String detail;
 
-	@Size(min = 1, max = 10, message = "input 1 to 100")
+	@Size(min = 1, max = 100, message = "input 1 to 100")
 	private String name;
 
 	private boolean done;

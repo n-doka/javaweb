@@ -152,7 +152,7 @@ public class TaskDao {
 			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
 			resultDb2.add(entformdb);
 		}
-		System.out.println("COMPLETE ITEM");
+		System.out.println("EDIT ITEM");
 		return resultDb2;
 	}
 
@@ -160,7 +160,7 @@ public class TaskDao {
 	public void editDb(Task taskForm) {
 		db.update("UPDATE task SET title = ?, detail = ?, done = ?  WHERE id = ?", taskForm.getTitle(),
 				taskForm.getDetail(), taskForm.getDone(), taskForm.getId());
-		System.out.println("add item");
+		System.out.println("EDIT COMPLETE");
 	}
 
 	/* 検索 */
