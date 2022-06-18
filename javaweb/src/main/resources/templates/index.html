@@ -13,10 +13,17 @@
     <h2 th:text="${sub}"></h2>
     <table class="table mt-4">
       <nav>
-        <ul>
-          <a href="#" th:href="@{/}" class="btn btn-white text-warning btn-outline-warning" role="button">すべて</a>
-          <a href="#" th:href="@{/doing}" class="btn btn-white text-warning btn-outline-warning" role="button">対応中</a>
-          <a href="#" th:href="@{/complete}" class="btn btn-white text-warning btn-outline-warning" role="button">完了</a>
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#" th:href="@{/}" class="nav-link active" aria-current="page"
+              role="button">すべて</a></li>
+          <li class="nav-item"><a href="#" th:href="@{/doing}" class="nav-link active" aria-current="page"
+              role="button">対応中</a></li>
+          <li class="nav-item"><a href="#" th:href="@{/complete}" class="nav-link active" aria-current="page"
+              role="button">完了</a></li>
+          <form method="post" th:action="@{/search}" th:object = "${form}">
+            <input type="text" name="name" value="" required>
+            <input type="submit" class="btn btn-white text-warning btn-outline-warning" value="検索" >
+          </form>
         </ul>
       </nav>
 
@@ -44,10 +51,10 @@
           <td th:text="*{item.detail}"></td>
           <td>
             <th:block th:if="${item.done}== false">
-            <form th:action="@{/done/true/{id}(id = ${item.id})}">
-              <input type="submit" class="btn btn-warning text-white" value="COMPLETE">
-            </form>
-          </th:block>
+              <form th:action="@{/done/true/{id}(id = ${item.id})}">
+                <input type="submit" class="btn btn-warning text-white" value="COMPLETE">
+              </form>
+            </th:block>
           </td>
 
           <td>
@@ -58,10 +65,11 @@
 
           <td>
             <form th:action="@{/del/{id}(id = ${item.id})}">
-              <input type="submit" class="btn btn-warning text-white btn-outline-white" value="DELETE" th:onclick=check()>
+              <input type="submit" class="btn btn-warning text-white btn-outline-white" value="DELETE"
+                th:onclick=check()>
             </form>
           </td>
-          
+
         </tr>
       </tbody>
     </table>

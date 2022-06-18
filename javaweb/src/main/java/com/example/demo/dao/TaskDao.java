@@ -28,7 +28,7 @@ public class TaskDao {
 	}
 
 	/* すべての表示 */
-	public List<Task> searchDb() {
+	public List<Task> allDb() {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 		// SQLを作成(全件取得)
 		String sql = "SELECT * FROM task";
@@ -161,6 +161,32 @@ public class TaskDao {
 		db.update("UPDATE task SET title = ?, detail = ?, done = ?  WHERE id = ?", taskForm.getTitle(),
 				taskForm.getDetail(), taskForm.getDone(), taskForm.getId());
 		System.out.println("add item");
+	}
+
+	/* 検索 */
+	public List<Task> searchDb(String search) {
+		// Sql でDBからデータを取得する（Map<String, Object>）
+
+		// SQLを実行する
+		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE title = ? OR detail = ?", search, search);
+
+		// Entityのリストデータをつくって、それをリターンする
+		List<Task> resultDb2 = new ArrayList<Task>();
+
+		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
+		for (Map<String, Object> result1 : resultDb1) {
+			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
+			Task entformdb = new Task();
+			// データを entformdb に移す
+			entformdb.setId((long) result1.get("id"));
+			entformdb.setTitle((String) result1.get("title"));
+			entformdb.setDetail((String) result1.get("detail"));
+			entformdb.setDone((Boolean) result1.get("done"));
+			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
+			resultDb2.add(entformdb);
+		}
+		System.out.println("COMPLETE ITEM");
+		return resultDb2;
 	}
 
 }

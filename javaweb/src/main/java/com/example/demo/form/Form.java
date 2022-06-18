@@ -9,7 +9,10 @@ public class Form {
 	private String title;
 	@Size(min = 1, max = 10, message = "input 1 to 100")
 	private String detail;
-	
+
+	@Size(min = 1, max = 10, message = "input 1 to 100")
+	private String name;
+
 	private boolean done;
 
 	public Form() {
@@ -37,6 +40,14 @@ public class Form {
 
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public boolean getDone() {

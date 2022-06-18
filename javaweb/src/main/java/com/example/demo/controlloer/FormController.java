@@ -37,7 +37,7 @@ public class FormController {
 	@RequestMapping("/")
 	public String view(Model model) {
 		// DAOからSQLの実行結果を受け取る
-		List<Task> list = taskDao.searchDb();
+		List<Task> list = taskDao.allDb();
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
@@ -145,6 +145,17 @@ public class FormController {
 			/* redirect:<URL> で、指定のURLに遷移する */
 			return "redirect:/";
 		}
+	}
+
+	@RequestMapping("/search")
+	public String search(Model model,  @Validated Form form, BindingResult result){
+		// DAOからSQLの実行結果を受け取る
+		List<Task> list = taskDao.searchDb(form.getName());
+
+		// modelに受け取ったSQLのデータを渡しておく
+		model.addAttribute("taskList", list);
+		model.addAttribute("sub", "検索結果"+ form.getName());
+		return "index.html";
 	}
 
 }
