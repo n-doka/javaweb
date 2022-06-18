@@ -40,7 +40,7 @@ public class FormController {
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("title", "すべて");
+		model.addAttribute("sub", "すべて");
 		return "index.html";
 	}
 
@@ -51,24 +51,24 @@ public class FormController {
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("title", "対応中");
+		model.addAttribute("sub", "対応中");
 		return "index.html";
 	}
 
-	@RequestMapping("/done")
-	public String done(Model model) {
+	@RequestMapping("/complete")
+	public String complete(Model model) {
 		// DAOからSQLの実行結果を受け取る
-		List<Form> list = taskDao.doneDb();
+		List<Form> list = taskDao.completeDb();
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("title", "完了");
+		model.addAttribute("sub", "完了");
 		return "index.html";
 	}
 
 	/* 削除のときの処理 */
 	@RequestMapping("del/{id}")
-	public String destoroy(@PathVariable Long id) {
+	public String delete(@PathVariable Long id) {
 		/* 指定のIDのデータを削除する */
 		taskDao.deleteDb(id);
 
@@ -79,7 +79,7 @@ public class FormController {
 	/* 追加のときの処理 */
 	@RequestMapping("/input")
 	public String form(Model model, Form form) {
-		model.addAttribute("title", "追加");
+		model.addAttribute("sub", "追加");
 		return ("/input");
 	}
 
@@ -89,18 +89,39 @@ public class FormController {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
 			return ("/input");
-		}else{
-		/* EntFormをSampleDaoに渡したいので、newする */
-		Form entForm = new Form();
+		} else {
+			/* EntFormをSampleDaoに渡したいので、newする */
+			Form entForm = new Form();
 
-		/* formオブジェクトに入っている、ユーザーが画面で入力した値を、entFormに渡す */
-		entForm.setTitle(form.getTitle());
-		entForm.setDetail(form.getDetail());
+			/* formオブジェクトに入っている、ユーザーが画面で入力した値を、entFormに渡す */
+			entForm.setTitle(form.getTitle());
+			entForm.setDetail(form.getDetail());
 
-		/* SampleDaoにEntFormのオブジェクトを渡して、データベースに保存させる */
-		this.taskDao.insertDb(entForm);
+			/* SampleDaoにEntFormのオブジェクトを渡して、データベースに保存させる */
+			this.taskDao.insertDb(entForm);
 			return "redirect:/";
 		}
+	}
+
+	/* 状態変更のときの処理 */
+	@RequestMapping("/done/{num}/{id}")
+	public String comp(@PathVariable int num, @PathVariable Long id) {
+		/* 指定のIDのデータを削除する */
+		taskDao.doneDb(num, id);
+
+		/* redirect:<URL> で、指定のURLに遷移する */
+		return "redirect:/";
+	}
+
+	/* 編集のときの処理 */
+	@RequestMapping("/edit/{id}")
+	public String form(Model model,  @PathVariable Long id) {
+		// DAOからSQLの実行結果を受け取る
+		List<Form> pagelist = taskDao.selectDb(id);
+
+		model.addAttribute("sub", "編集");
+		model.addAttribute("id", pagelist);
+		return ("edit");
 	}
 
 }

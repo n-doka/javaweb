@@ -49,6 +49,7 @@ public class TaskDao {
 			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
 			resultDb2.add(entformdb);
 		}
+		System.out.println("ALL ITEM");
 		return resultDb2;
 	}
 
@@ -75,11 +76,12 @@ public class TaskDao {
 			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
 			resultDb2.add(entformdb);
 		}
+		System.out.println("DOING ITEM");
 		return resultDb2;
 	}
 
 	/* doneの検索 */
-	public List<Form> doneDb() {
+	public List<Form> completeDb() {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 		// SQLを作成(done取得)
 		String sql = "SELECT * FROM task WHERE done = 1";
@@ -101,6 +103,7 @@ public class TaskDao {
 			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
 			resultDb2.add(entformdb);
 		}
+		System.out.println("COMPLETE ITEM");
 		return resultDb2;
 	}
 
@@ -116,6 +119,45 @@ public class TaskDao {
 		db.update("DELETE FROM task WHERE id = ?", id);
 
 		System.out.println("DELETED" + id);
+	}
+
+	/* 状態変更 */
+	public void doneDb(int num, Long id) {
+		// 実行
+		if (num == 0) {
+			db.update("UPDATE task SET done = false WHERE id = ?", id);
+		} else if (num == 1) {
+			db.update("UPDATE task SET done = true WHERE id = ?", id);
+			System.out.println("CHANGED" + id);
+		} else {
+
+		}
+	}
+
+	/* 編集のデータ検索 */
+	public List<Form> selectDb(Long id) {
+		// Sql でDBからデータを取得する（Map<String, Object>）
+
+		// SQLを実行する
+		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE id = ?", id);
+
+		// Entityのリストデータをつくって、それをリターンする
+		List<Form> resultDb2 = new ArrayList<Form>();
+
+		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
+		for (Map<String, Object> result1 : resultDb1) {
+			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
+			Form entformdb = new Form();
+			// データを entformdb に移す
+			entformdb.setId((long) result1.get("id"));
+			entformdb.setTitle((String) result1.get("title"));
+			entformdb.setDetail((String) result1.get("detail"));
+			entformdb.setDone((Boolean) result1.get("done"));
+			// 移し替えたデータを持った entformdb を、 resultDB2 に入れる
+			resultDb2.add(entformdb);
+		}
+		System.out.println("COMPLETE ITEM");
+		return resultDb2;
 	}
 
 }
