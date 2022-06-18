@@ -1,0 +1,47 @@
+package com.example.demo.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity // @Entity アノテーションで、データベースのテーブルと連携することを明示
+@Table(name="staff") // 連動させるデータベース上のテーブル名を記載
+public class Task {
+
+	@Id // データベースのテーブル側で、プライマリキーになることを示す
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 新規レコード作成時に、重複しない値でidを生成
+	private Long id; // エラーが出るので、 JPAのリポジトリにあわせてint からLongにしておきます
+	private String name;
+	
+	
+	public Task() {
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override // 親クラスのtuString()の動作を上書きする
+	public String toString(){
+		return "Staff [id = " + id + ", name = " + name + "]";
+	}
+
+}
