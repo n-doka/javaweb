@@ -42,7 +42,7 @@ public class TaskDao {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Form entformdb = new Form();
 			// データを entformdb に移す
-			entformdb.setId((int) result1.get("id"));
+			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
 			entformdb.setDetail((String) result1.get("detail"));
 			entformdb.setDone((Boolean) result1.get("done"));
@@ -68,7 +68,7 @@ public class TaskDao {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Form entformdb = new Form();
 			// データを entformdb に移す
-			entformdb.setId((int) result1.get("id"));
+			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
 			entformdb.setDetail((String) result1.get("detail"));
 			entformdb.setDone((Boolean) result1.get("done"));
@@ -94,7 +94,7 @@ public class TaskDao {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Form entformdb = new Form();
 			// データを entformdb に移す
-			entformdb.setId((int) result1.get("id"));
+			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
 			entformdb.setDetail((String) result1.get("detail"));
 			entformdb.setDone((Boolean) result1.get("done"));
@@ -105,8 +105,9 @@ public class TaskDao {
 	}
 
 	/* 追加 */
-	public void insertDb(Form entForm) {
-		this.db.update("INSERT INTO task (name) VALUES( ?, ?)", entForm.getTitle(), entForm.getDetail());
+	public void insertDb(Form taskForm) {
+		this.db.update("INSERT INTO task(title, detail) VALUES(?, ?)", taskForm.getTitle(), taskForm.getDetail());
+		System.out.println("add item");
 	}
 
 	/* 削除 */

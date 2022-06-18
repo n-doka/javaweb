@@ -39,7 +39,8 @@ public class FormController {
 		List<Form> list = taskDao.searchDb();
 
 		// modelに受け取ったSQLのデータを渡しておく
-		model.addAttribute("dbList", list);
+		model.addAttribute("taskList", list);
+		model.addAttribute("title", "すべて");
 		return "index.html";
 	}
 
@@ -49,7 +50,8 @@ public class FormController {
 		List<Form> list = taskDao.doingDb();
 
 		// modelに受け取ったSQLのデータを渡しておく
-		model.addAttribute("dbList", list);
+		model.addAttribute("taskList", list);
+		model.addAttribute("title", "対応中");
 		return "index.html";
 	}
 
@@ -59,14 +61,14 @@ public class FormController {
 		List<Form> list = taskDao.doneDb();
 
 		// modelに受け取ったSQLのデータを渡しておく
-		model.addAttribute("dbList", list);
+		model.addAttribute("taskList", list);
+		model.addAttribute("title", "完了");
 		return "index.html";
 	}
 
 	/* 削除のときの処理 */
 	@RequestMapping("del/{id}")
-	public String destoroy(
-			@PathVariable Long id) {
+	public String destoroy(@PathVariable Long id) {
 		/* 指定のIDのデータを削除する */
 		taskDao.deleteDb(id);
 
@@ -77,6 +79,7 @@ public class FormController {
 	/* 追加のときの処理 */
 	@RequestMapping("/input")
 	public String form(Model model, Form form) {
+		model.addAttribute("title", "追加");
 		return ("/input");
 	}
 

@@ -2,7 +2,7 @@ package com.example.demo.form;
 
 public class Form {
 
-	private int id;
+	private long id;
 	private String title;
 	private String detail;
 	private boolean done;
@@ -13,7 +13,7 @@ public class Form {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	

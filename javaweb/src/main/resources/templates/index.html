@@ -28,11 +28,11 @@
           <th>Detail</th>
           <th></th>
           <th></th>
-          <th><a href="/add.html" th:href="@{/add}" class="btn btn-warning text-white" role="button">追加</a></th>
+          <th><a href="/input.html" th:href="@{/input}" class="btn btn-warning text-white" role="button">追加</a></th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="item:${tasklist}">
+        <tr th:each="item:${taskList}">
           <th:block th:if="${item.done}== false">
             <td>対応中</td>
           </th:block>
