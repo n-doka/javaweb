@@ -44,7 +44,7 @@
           <td th:text="*{item.detail}"></td>
           <td>
             <th:block th:if="${item.done}== false">
-            <form th:action="@{/done/1/{id}(id = ${item.id})}">
+            <form th:action="@{/done/true/{id}(id = ${item.id})}">
               <input type="submit" class="btn btn-warning text-white" value="COMPLETE">
             </form>
           </th:block>

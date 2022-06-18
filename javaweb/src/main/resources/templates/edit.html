@@ -11,25 +11,42 @@
 	<h1 class="bg-warning text-white px-4 mb-4">Task</h1>
 	<h2 th:text="${sub}"></h2>
 	<div>
-		<form method="post" th:action="@{/edited/}" th:object="${form}">
-			<table>
-				<tr th:each="item:${taskList}">
-					<td th:text="*{item.id}"></td>
-					<td th:text="*{item.title}"></td>
-					<td th:text="*{item.detail}"></td>
-					<td><label>title</label></td>
-					<td><input type="text" name="title" th:value="*{item.title}"></td>
-					<td><label>detail</label></td>
-					<td><input type="text" name="detail" th:value="*{item.detail}"></td>
-					<td><label>done</label></td>
-					<p><select name="done">
-						<option value="0">処理中</option>
-						<option value="1">完了</option>
-					</select></p>
-				</tr>
-			</table>
+		<table class=table>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Done</th>
+				<th scope="col">Title</th>
+				<th scope="col">Detail</th>
+			</tr>
+			<tr th:each="item:${taskList}">
+				<td th:text="*{item.id}"></td>
+				<th:block th:if="${item.done}== false">
+					<td>対応中</td>
+				</th:block>
+				<th:block th:if="${item.done}== true">
+					<td>完了</td>
+				</th:block>
+				<td th:text="*{item.title}"></td>
+				<td th:text="*{item.detail}"></td>
+			</tr>
+		</table>
+		<form method="post" th:action="@{/edit/fin}" th:object="${form}">
+			<p><label>done</label></p>
+			<select name="done">
+				<option th:value="false">処理中</option>
+				<option th:value="true">完了</option>
+			</select>
 			<br>
-			<input type="submit" value="保存" class="btn btn-warning text-white">
+			<tr th:each="item:${taskList}">
+				<p><label>title</label></p>
+				<input type="text" name="title" th:value="${item.title}">
+				<br>
+				<p><label>detail</label></p>
+				<input type="text" name="detail" th:value="${item.detail}">
+				<input type="hidden" name="id" th:value="${item.id}">
+			</tr>
+			<br>
+			<input type="submit" value="保存" class="btn btn-warning text-white" th:onclick=check_edit()>
 		</form>
 	</div>
 

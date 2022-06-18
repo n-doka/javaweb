@@ -1,13 +1,19 @@
 package com.example.demo.form;
 
+import javax.validation.constraints.Size;
+
 public class Form {
 
 	private long id;
+	@Size(min = 1, max = 10, message = "input 1 to 10")
 	private String title;
+	@Size(min = 1, max = 10, message = "input 1 to 100")
 	private String detail;
-	private boolean done;
 	
-	public Form() {}
+	private boolean done;
+
+	public Form() {
+	}
 
 	public long getId() {
 		return id;
@@ -16,7 +22,6 @@ public class Form {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
 
 	public String getTitle() {
 		return title;
@@ -26,7 +31,6 @@ public class Form {
 		this.title = title;
 	}
 
-
 	public String getDetail() {
 		return detail;
 	}
@@ -34,7 +38,6 @@ public class Form {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-
 
 	public boolean getDone() {
 		return done;

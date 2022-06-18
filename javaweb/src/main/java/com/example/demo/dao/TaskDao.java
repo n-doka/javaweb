@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.form.Form;
+import com.example.demo.entity.Task;
 
 @Repository
 public class TaskDao {
@@ -27,7 +28,7 @@ public class TaskDao {
 	}
 
 	/* すべての表示 */
-	public List<Form> searchDb() {
+	public List<Task> searchDb() {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 		// SQLを作成(全件取得)
 		String sql = "SELECT * FROM task";
@@ -35,12 +36,12 @@ public class TaskDao {
 		List<Map<String, Object>> resultDb1 = db.queryForList(sql);
 
 		// Entityのリストデータをつくって、それをリターンする
-		List<Form> resultDb2 = new ArrayList<Form>();
+		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
 		for (Map<String, Object> result1 : resultDb1) {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
-			Form entformdb = new Form();
+			Task entformdb = new Task();
 			// データを entformdb に移す
 			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
@@ -54,7 +55,7 @@ public class TaskDao {
 	}
 
 	/* doing検索 */
-	public List<Form> doingDb() {
+	public List<Task> doingDb() {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 		// SQLを作成(doing取得)
 		String sql = "SELECT * FROM task WHERE done = 0";
@@ -62,12 +63,12 @@ public class TaskDao {
 		List<Map<String, Object>> resultDb1 = db.queryForList(sql);
 
 		// Entityのリストデータをつくって、それをリターンする
-		List<Form> resultDb2 = new ArrayList<Form>();
+		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
 		for (Map<String, Object> result1 : resultDb1) {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
-			Form entformdb = new Form();
+			Task entformdb = new Task();
 			// データを entformdb に移す
 			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
@@ -81,7 +82,7 @@ public class TaskDao {
 	}
 
 	/* doneの検索 */
-	public List<Form> completeDb() {
+	public List<Task> completeDb() {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 		// SQLを作成(done取得)
 		String sql = "SELECT * FROM task WHERE done = 1";
@@ -89,12 +90,12 @@ public class TaskDao {
 		List<Map<String, Object>> resultDb1 = db.queryForList(sql);
 
 		// Entityのリストデータをつくって、それをリターンする
-		List<Form> resultDb2 = new ArrayList<Form>();
+		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
 		for (Map<String, Object> result1 : resultDb1) {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
-			Form entformdb = new Form();
+			Task entformdb = new Task();
 			// データを entformdb に移す
 			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
@@ -122,32 +123,27 @@ public class TaskDao {
 	}
 
 	/* 状態変更 */
-	public void doneDb(int num, Long id) {
+	public void doneDb(boolean num, Long id) {
 		// 実行
-		if (num == 0) {
-			db.update("UPDATE task SET done = false WHERE id = ?", id);
-		} else if (num == 1) {
-			db.update("UPDATE task SET done = true WHERE id = ?", id);
-			System.out.println("CHANGED" + id);
-		} else {
+		db.update("UPDATE task SET done = ? WHERE id = ?", num, id);
+		System.out.println("CHANGED" + id);
 
-		}
 	}
 
 	/* 編集のデータ検索 */
-	public List<Form> selectDb(Long id) {
+	public List<Task> selectDb(Long id) {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 
 		// SQLを実行する
 		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE id = ?", id);
 
 		// Entityのリストデータをつくって、それをリターンする
-		List<Form> resultDb2 = new ArrayList<Form>();
+		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
 		for (Map<String, Object> result1 : resultDb1) {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
-			Form entformdb = new Form();
+			Task entformdb = new Task();
 			// データを entformdb に移す
 			entformdb.setId((long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
@@ -158,6 +154,13 @@ public class TaskDao {
 		}
 		System.out.println("COMPLETE ITEM");
 		return resultDb2;
+	}
+
+	/* 変更 */
+	public void editDb(Task taskForm) {
+		db.update("UPDATE task SET title = ?, detail = ?, done = ?  WHERE id = ?", taskForm.getTitle(),
+				taskForm.getDetail(), taskForm.getDone(), taskForm.getId());
+		System.out.println("add item");
 	}
 
 }
