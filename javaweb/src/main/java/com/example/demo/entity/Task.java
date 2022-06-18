@@ -39,8 +39,8 @@ public class Task {
 		this.detail = detail;
 	}
 
-	public String getDone() {
-		return detail;
+	public boolean getDone() {
+		return done;
 	}
 
 
