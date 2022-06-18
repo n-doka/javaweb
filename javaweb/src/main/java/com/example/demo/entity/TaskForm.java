@@ -1,14 +1,14 @@
 package com.example.demo.entity;
 
-public class EntForm {
+public class TaskForm {
 
 	private int id;
-	private String name;
+	private String title;
+	private String detail;
 	
-	public EntForm() {
-	}
+	public TaskForm() {}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -16,12 +16,24 @@ public class EntForm {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
+	public String getDetail() {
+		return detail;
+	}
+
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getDone() {
+		return detail;
+	}
 }

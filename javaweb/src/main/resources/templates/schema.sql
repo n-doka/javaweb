@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS sample sample(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100)NOT NULL,
+    detail VARCHAR(100)NOT NULL,
+    done BOOLEAN DEFAULT false,
+    PRIMARY KEY(id)
+);
