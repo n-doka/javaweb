@@ -167,7 +167,7 @@ public class TaskDao {
 		// Sql でDBからデータを取得する（Map<String, Object>）
 
 		// SQLを実行する
-		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE title = ? OR detail = ?", search, search);
+		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE title LIKE ? OR detail LIKE ?", "%"+ search +"%", "%"+ search +"%");
 
 		// リストデータをつくって、それをリターンする
 		List<Task> resultDb2 = new ArrayList<Task>();

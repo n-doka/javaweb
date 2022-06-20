@@ -1,9 +1,10 @@
 'use strict';
 
 //消去時のポップアップ
-function check_del() {
+function check_del(n) {
 	if (window.confirm("本当に削除しますか？")) {
-		let form = document.querySelector("#delete");
+		//指定したidの要素をcsに入れる	
+		let form = document.querySelector(`[id=${CSS.escape(n)}]`);
 		form.submit();
 	}
 }

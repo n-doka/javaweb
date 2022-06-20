@@ -68,9 +68,9 @@
           </td>
 
           <td>
-            <form id ="delete" th:action="@{/del/{id}(id = ${item.id})}">
+            <form class ="delete" th:id = "${item.id}"  th:action="@{/del/{id}(id = ${item.id})}">
               <input  type="button" class="btn btn-warning text-white btn-outline-white" value="削除"
-                th:onclick=check_del()>
+                th:onclick= "| check_del('__${item.id}__') |">
             </form>
           </td>
 
