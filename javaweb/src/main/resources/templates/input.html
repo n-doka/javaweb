@@ -12,7 +12,7 @@
 	<div class="container">
 		<h2 th:text="${sub}"></h2>
 		<a th:text = "${contents}"></a>
-		<form method="post" th:action="@{/input/complete}" th:object="${form}">
+		<form method="post" th:action="@{/input/complete}" th:object="${task}">
 			<table>
 				<tr>
 					<td><label>title</label></td>

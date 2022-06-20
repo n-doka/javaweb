@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.form.Form;
 import com.example.demo.entity.Task;
 
 @Repository
@@ -109,7 +108,7 @@ public class TaskDao {
 	}
 
 	/* 追加 */
-	public void insertDb(Form taskForm) {
+	public void insertDb(Task taskForm) {
 		this.db.update("INSERT INTO task(title, detail) VALUES(?, ?)", taskForm.getTitle(), taskForm.getDetail());
 		System.out.println("add item");
 	}
@@ -145,7 +144,7 @@ public class TaskDao {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Task entformdb = new Task();
 			// データを entformdb に移す
-			entformdb.setId((long) result1.get("id"));
+			entformdb.setId((Long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
 			entformdb.setDetail((String) result1.get("detail"));
 			entformdb.setDone((Boolean) result1.get("done"));
@@ -178,7 +177,7 @@ public class TaskDao {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Task entformdb = new Task();
 			// データを entformdb に移す
-			entformdb.setId((long) result1.get("id"));
+			entformdb.setId((Long) result1.get("id"));
 			entformdb.setTitle((String) result1.get("title"));
 			entformdb.setDetail((String) result1.get("detail"));
 			entformdb.setDone((Boolean) result1.get("done"));

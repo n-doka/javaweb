@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.dao.TaskDao;
-import com.example.demo.form.Form;
 import com.example.demo.entity.Task;
 
 @Controller
@@ -78,14 +77,14 @@ public class FormController {
 
 	/* 追加のときの処理 */
 	@RequestMapping("/input")
-	public String form(Model model, Form form) {
+	public String form(Model model, Task form) {
 		model.addAttribute("sub", "追加");
 		return ("/input");
 	}
 
 	/* 追加入力後の処理 */
 	@RequestMapping("/input/complete")
-	public String confirm(Model model, @Validated Form form, BindingResult result) {
+	public String confirm(Model model, @Validated Task form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
 			model.addAttribute("sub", "追加");
@@ -93,7 +92,7 @@ public class FormController {
 			return ("/input");
 		} else {
 			/* EntFormをSampleDaoに渡したいので、newする */
-			Form entForm = new Form();
+			Task entForm = new Task();
 
 			/* formオブジェクトに入っている、ユーザーが画面で入力した値を、entFormに渡す */
 			entForm.setTitle(form.getTitle());
@@ -127,7 +126,7 @@ public class FormController {
 
 	/* 編集更新のときの処理 */
 	@RequestMapping("/edit/fin")
-	public String edit(Model model, @Validated Form form, BindingResult result) {
+	public String edit(Model model, @Validated Task form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
 			model.addAttribute("sub", "編集");
@@ -151,7 +150,7 @@ public class FormController {
 	}
 
 	@RequestMapping("/search")
-	public String search(Model model, @Validated Form form, BindingResult result) {
+	public String search(Model model, @Validated Task form, BindingResult result) {
 		// DAOからSQLの実行結果を受け取る
 		List<Task> list = taskDao.searchDb(form.getName());
 

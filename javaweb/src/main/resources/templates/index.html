@@ -11,7 +11,7 @@
 <body>
   <h1 class="bg-warning text-white px-4 mb-4">Task</h1>
   <div class = "container" id ="menu">
-    <form method="post" th:action="@{/search}" th:object="${form}">
+    <form method="post" th:action="@{/search}" th:object="${task}">
       <input type="text" name="name" value="" required>
       <input type="submit" class="btn btn-white text-warning btn-outline-warning" value="検索">
     </form>
@@ -68,7 +68,7 @@
           </td>
 
           <td>
-            <form th:action="@{/del/{id}(id = ${item.id})}">
+            <form th:id="delete" th:action="@{/del/{id}(id = ${item.id})}">
               <input type="button" class="btn btn-warning text-white btn-outline-white" value="削除"
                 th:onclick=check_del()>
             </form>

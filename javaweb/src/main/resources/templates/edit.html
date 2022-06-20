@@ -31,7 +31,7 @@
 				<td th:text="*{item.detail}"></td>
 			</tr>
 		</table>
-		<form method="post" th:action="@{/edit/fin}" th:object="${form}">
+		<form method="post" th:action="@{/edit/fin}" th:object="${task}">
 			<p><label>done</label></p>
 			<select name="done">
 				<option th:value="false">処理中</option>

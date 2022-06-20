@@ -1,9 +1,17 @@
 package com.example.demo.entity;
 
+import javax.validation.constraints.Size;
+
 public class Task {
-	private Long id;
+	private long id;
+	@Size(min = 1, max = 10, message = "input 1 to 10")
 	private String title;
+	@Size(min = 1, max = 100, message = "input 1 to 100")
 	private String detail;
+
+	@Size(min = 1, max = 100, message = "input 1 to 100")
+	private String name;
+
 	private boolean done;
 	
 	
@@ -46,6 +54,14 @@ public class Task {
 
 	public void setDone(boolean done) {
 		this.done = done;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override // 親クラスのtuString()の動作を上書きする
