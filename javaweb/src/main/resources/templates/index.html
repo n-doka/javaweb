@@ -5,37 +5,41 @@
   <meta charset="UTF-8">
   <title>Insert title here</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 
 <body>
   <h1 class="bg-warning text-white px-4 mb-4">Task</h1>
+  <div class = "container text-right row">
+    <form method="post" th:action="@{/search}" th:object="${form}" class = "col">
+      <input type="text" name="name" value="" required>
+      <input type="submit" class="btn btn-white text-warning btn-outline-warning" value="検索">
+    </form>
+    <a href="/input.html" th:href="@{/input}" class="col-3 btn btn-warning text-white" role="button">新しいタスク</a>
+  </div>
+
   <div class="container">
-    <h2 th:text="${sub}"></h2>
     <table class="table mt-4">
       <nav>
         <ul class="nav nav-tabs">
-          <li class="nav-item"><a href="#" th:href="@{/}" class="nav-link active" aria-current="page"
-              role="button">すべて</a></li>
-          <li class="nav-item"><a href="#" th:href="@{/doing}" class="nav-link active" aria-current="page"
-              role="button">対応中</a></li>
-          <li class="nav-item"><a href="#" th:href="@{/complete}" class="nav-link active" aria-current="page"
-              role="button">完了</a></li>
-          <form method="post" th:action="@{/search}" th:object = "${form}">
-            <input type="text" name="name" value="" required>
-            <input type="submit" class="btn btn-white text-warning btn-outline-warning" value="検索" >
-          </form>
+          <li class="nav-item"><a href="#" th:href="@{/}" class="nav-link" aria-current="page"
+              role="button" th:onclick = check_change(1)>すべて</a></li>
+          <li class="nav-item"><a href="#" th:href="@{/doing}" class="nav-link" aria-current="page"
+              role="button" th:onclick = check_change(2)>対応中</a></li>
+          <li class="nav-item"><a href="#" th:href="@{/complete}" class="nav-link" aria-current="page"
+              role="button" th:onclick = check_change(3)>完了</a></li>
         </ul>
       </nav>
 
       <thead>
         <tr>
-          <th>Done</th>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Detail</th>
+          <th>状態</th>
+          <th>iD</th>
+          <th>title</th>
+          <th>detail</th>
           <th></th>
           <th></th>
-          <th><a href="/input.html" th:href="@{/input}" class="btn btn-warning text-white" role="button">追加</a></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -52,20 +56,20 @@
           <td>
             <th:block th:if="${item.done}== false">
               <form th:action="@{/done/true/{id}(id = ${item.id})}">
-                <input type="submit" class="btn btn-warning text-white" value="COMPLETE">
+                <input type="submit" class="btn btn-warning text-white" value="完了する">
               </form>
             </th:block>
           </td>
 
           <td>
             <form th:action="@{/edit/{id}(id = ${item.id})}">
-              <input type="submit" class="btn btn-warning text-white btn-outline-white" value="EDIT">
+              <input type="submit" class="btn btn-warning text-white btn-outline-white" value="編集">
             </form>
           </td>
 
           <td>
             <form th:action="@{/del/{id}(id = ${item.id})}">
-              <input type="button" class="btn btn-warning text-white btn-outline-white" value="DELETE"
+              <input type="button" class="btn btn-warning text-white btn-outline-white" value="削除"
                 th:onclick=check_del()>
             </form>
           </td>

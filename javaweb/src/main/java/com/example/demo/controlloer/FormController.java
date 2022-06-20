@@ -41,10 +41,10 @@ public class FormController {
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("sub", "すべて");
 		return "index.html";
 	}
 
+	/* 処理中の表示(home) */
 	@RequestMapping("/doing")
 	public String doing(Model model) {
 		// DAOからSQLの実行結果を受け取る
@@ -52,10 +52,10 @@ public class FormController {
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("sub", "対応中");
 		return "index.html";
 	}
 
+	/* 完了の表示(home) */
 	@RequestMapping("/complete")
 	public String complete(Model model) {
 		// DAOからSQLの実行結果を受け取る
@@ -63,7 +63,6 @@ public class FormController {
 
 		// modelに受け取ったSQLのデータを渡しておく
 		model.addAttribute("taskList", list);
-		model.addAttribute("sub", "完了");
 		return "index.html";
 	}
 
@@ -107,7 +106,7 @@ public class FormController {
 	/* 状態変更のときの処理 */
 	@RequestMapping("/done/{num}/{id}")
 	public String comp(@PathVariable boolean num, @PathVariable Long id) {
-		/* 指定のIDのデータを削除する */
+		/* 指定のIDの状態を変更する */
 		taskDao.doneDb(num, id);
 		/* redirect:<URL> で、指定のURLに遷移する */
 		return "redirect:/";
@@ -118,6 +117,7 @@ public class FormController {
 	public String form(Model model, @PathVariable Long id) {
 		// DAOからSQLの実行結果を受け取る
 		List<Task> pagelist = taskDao.selectDb(id);
+		// modelに受け取ったSQLのデータを渡す
 		model.addAttribute("sub", "編集");
 		model.addAttribute("taskList", pagelist);
 		return ("/edit");
@@ -125,7 +125,7 @@ public class FormController {
 
 	/* 編集更新のときの処理 */
 	@RequestMapping("/edit/fin")
-	public String edit(Model model,  @Validated Form form, BindingResult result) {
+	public String edit(Model model, @Validated Form form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
 			return "redirect:/";
@@ -139,8 +139,7 @@ public class FormController {
 			taskForm.setDetail(form.getDetail());
 			taskForm.setDone(form.getDone());
 
-			/* SampleDaoにEntFormのオブジェクトを渡して、データベースに保存させる */
-			/* 指定のIDのデータを削除する */
+			/* 指定のIDのデータを編集する */
 			taskDao.editDb(taskForm);
 			/* redirect:<URL> で、指定のURLに遷移する */
 			return "redirect:/";
@@ -148,13 +147,13 @@ public class FormController {
 	}
 
 	@RequestMapping("/search")
-	public String search(Model model,  @Validated Form form, BindingResult result){
+	public String search(Model model, @Validated Form form, BindingResult result) {
 		// DAOからSQLの実行結果を受け取る
 		List<Task> list = taskDao.searchDb(form.getName());
 
-		// modelに受け取ったSQLのデータを渡しておく
+		// modelに受け取ったSQLのデータを渡す
 		model.addAttribute("taskList", list);
-		model.addAttribute("sub", "検索結果"+ form.getName());
+		model.addAttribute("sub", "検索結果" + form.getName());
 		return "index.html";
 	}
 
