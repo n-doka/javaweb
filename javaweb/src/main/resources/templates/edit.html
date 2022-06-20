@@ -10,7 +10,6 @@
 <body>
 	<h1 class="bg-warning text-white px-4 mb-4">Task</h1>
 	<h2 th:text="${sub}"></h2>
-	<a th:text = "${contents}"></a>
 	<div>
 		<table class=table>
 			<tr>
@@ -46,8 +45,7 @@
 				<input type="text" name="detail" th:value="${item.detail}">
 				<input type="hidden" name="id" th:value="${item.id}">
 			</tr>
-			<br>
-			<input type="submit" value="保存" class="btn btn-warning text-white">
+			<p><input type="submit" value="保存" class="btn btn-warning text-white"></p>
 		</form>
 	</div>
 

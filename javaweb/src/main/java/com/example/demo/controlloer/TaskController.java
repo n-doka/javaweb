@@ -14,7 +14,7 @@ import com.example.demo.dao.TaskDao;
 import com.example.demo.entity.Task;
 
 @Controller
-public class FormController {
+public class TaskController {
 
 	/*
 	 * リポジトリクラス(DBとの通信担当)を
@@ -28,7 +28,7 @@ public class FormController {
 	 * メンバ変数の中に保存する（この方法をコンストラクタインジェクションと呼ぶ）
 	 */
 	@Autowired // これを書いておくと、引数の中のクラスを自動的にnewしてオブジェクトを渡してくれる
-	public FormController(TaskDao taskDao) {
+	public TaskController(TaskDao taskDao) {
 		this.taskDao = taskDao;
 	}
 
@@ -88,7 +88,7 @@ public class FormController {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
 			model.addAttribute("sub", "追加");
-			model.addAttribute("contents", "保存できませんでした。");
+			model.addAttribute("contents", "titleは15文字以内、detailは100文字以内にしてください");
 			return ("/input");
 		} else {
 			/* EntFormをSampleDaoに渡したいので、newする */
@@ -129,9 +129,6 @@ public class FormController {
 	public String edit(Model model, @Validated Task form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
-			model.addAttribute("sub", "編集");
-			model.addAttribute("contents", "保存できませんでした。");
-			return ("/edit");
 		} else {
 			/* EntFormをTaskDaoに渡したいので、newする */
 			Task taskForm = new Task();
@@ -144,11 +141,12 @@ public class FormController {
 
 			/* 指定のIDのデータを編集する */
 			taskDao.editDb(taskForm);
-			/* redirect:<URL> で、指定のURLに遷移する */
-			return "redirect:/";
 		}
+		/* redirect:<URL> で、指定のURLに遷移する */
+		return "redirect:/";
 	}
 
+	/* 検索のときの処理 */
 	@RequestMapping("/search")
 	public String search(Model model, @Validated Task form, BindingResult result) {
 		// DAOからSQLの実行結果を受け取る

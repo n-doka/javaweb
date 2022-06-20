@@ -4,7 +4,7 @@ import javax.validation.constraints.Size;
 
 public class Task {
 	private long id;
-	@Size(min = 1, max = 10, message = "input 1 to 10")
+	@Size(min = 1, max = 15, message = "input 1 to 10")
 	private String title;
 	@Size(min = 1, max = 100, message = "input 1 to 100")
 	private String detail;
