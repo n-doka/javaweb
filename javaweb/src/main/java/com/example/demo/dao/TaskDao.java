@@ -89,10 +89,10 @@ public class TaskDao {
 		// SQLを実行する
 		List<Map<String, Object>> resultDb1 = db.queryForList(sql);
 
-		// Entityのリストデータをつくって、それをリターンする
+		// リストデータをつくって、それをリターンする
 		List<Task> resultDb2 = new ArrayList<Task>();
 
-		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
+		// 取得したSQLのデータ(Mapのデータ
 		for (Map<String, Object> result1 : resultDb1) {
 			// データ 1 件分を 1 つのまとまりとした EntForm 型の「 entformdb 」を生成
 			Task entformdb = new Task();
@@ -137,7 +137,7 @@ public class TaskDao {
 		// SQLを実行する
 		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE id = ?", id);
 
-		// Entityのリストデータをつくって、それをリターンする
+		// リストデータをつくって、それをリターンする
 		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える
@@ -170,7 +170,7 @@ public class TaskDao {
 		// SQLを実行する
 		List<Map<String, Object>> resultDb1 = db.queryForList("SELECT * FROM task WHERE title = ? OR detail = ?", search, search);
 
-		// Entityのリストデータをつくって、それをリターンする
+		// リストデータをつくって、それをリターンする
 		List<Task> resultDb2 = new ArrayList<Task>();
 
 		// 取得したSQLのデータ(Mapのデータ)を、Entityに詰め替える

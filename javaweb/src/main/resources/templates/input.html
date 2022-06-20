@@ -11,6 +11,7 @@
 	<h1 class="bg-warning text-white px-4 mb-4">Task</h1>
 	<div class="container">
 		<h2 th:text="${sub}"></h2>
+		<a th:text = "${contents}"></a>
 		<form method="post" th:action="@{/input/complete}" th:object="${form}">
 			<table>
 				<tr>

@@ -88,6 +88,8 @@ public class FormController {
 	public String confirm(Model model, @Validated Form form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
+			model.addAttribute("sub", "追加");
+			model.addAttribute("contents", "保存できませんでした。");
 			return ("/input");
 		} else {
 			/* EntFormをSampleDaoに渡したいので、newする */
@@ -128,7 +130,9 @@ public class FormController {
 	public String edit(Model model, @Validated Form form, BindingResult result) {
 		if (result.hasErrors()) {
 			/* 入力内容にエラーがあった場合の動作：元の画面に戻る */
-			return "redirect:/";
+			model.addAttribute("sub", "編集");
+			model.addAttribute("contents", "保存できませんでした。");
+			return ("/edit");
 		} else {
 			/* EntFormをTaskDaoに渡したいので、newする */
 			Task taskForm = new Task();
