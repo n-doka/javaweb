@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Insert title here</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link th:href="@{/style.css}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
   <h1 class="bg-warning text-white px-4 mb-4">Task</h1>
-  <div class = "container text-right row">
-    <form method="post" th:action="@{/search}" th:object="${form}" class = "col">
+  <div class = "container" id ="menu">
+    <form method="post" th:action="@{/search}" th:object="${form}">
       <input type="text" name="name" value="" required>
       <input type="submit" class="btn btn-white text-warning btn-outline-warning" value="検索">
     </form>
-    <a href="/input.html" th:href="@{/input}" class="col-3 btn btn-warning text-white" role="button">新しいタスク</a>
+    <a href="/input.html" th:href="@{/input}" class="btn btn-warning text-white" role="button">新しいタスク</a>
   </div>
 
   <div class="container">
